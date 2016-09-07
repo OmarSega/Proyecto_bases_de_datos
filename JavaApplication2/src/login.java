@@ -1,4 +1,14 @@
 
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -39,11 +49,11 @@ public class login extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         usuario = new javax.swing.JTextField();
-        contra = new javax.swing.JTextField();
         iniciar_sesion = new javax.swing.JButton();
         cancelar = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        contra = new javax.swing.JPasswordField();
 
         jLabel2.setText("jLabel2");
 
@@ -71,6 +81,7 @@ public class login extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Contraseña:");
 
+        usuario.setName("txtUser"); // NOI18N
         usuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 usuarioActionPerformed(evt);
@@ -125,13 +136,13 @@ public class login extends javax.swing.JFrame {
                                     .addComponent(jLabel8)
                                     .addComponent(jLabel7))
                                 .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(contra, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(usuario, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
+                                    .addComponent(contra)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(58, 58, 58)
                                 .addComponent(iniciar_sesion, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                                 .addComponent(cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(40, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -201,10 +212,46 @@ public class login extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void iniciar_sesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iniciar_sesionActionPerformed
-        // TODO add your handling code here:
-        Menu fr = new Menu();
-        fr.setVisible(true);
-        this.dispose();
+        try {
+            // TODO add your handling code here:
+            Connection con = conexion.getConexion();
+            Statement st = con.createStatement();
+            String userText = usuario.getText();
+            String contraText =new String(contra.getPassword());
+            
+            // para utilizar el procedimiento almacenado 
+            // La clase CallableStament sirve para mandar a llamar procedimientos
+            CallableStatement cst = con.prepareCall("{CALL login (?,?,?)}");
+            
+            // establecemos los parametros de entrada indicando el indice
+            cst.setString(1, userText);
+            cst.setString(2, contraText);
+            
+            // establecemos lo parametros de salida con indice
+            cst.registerOutParameter(3, java.sql.Types.BOOLEAN);
+            // ejecutamos el proccedimiento
+            cst.execute();
+            
+            //obtenemos el valor deexito, con el indice
+            
+            Boolean exito = cst.getBoolean(3);
+            // comparamos
+            if(exito) {
+                Menu fr = new Menu();
+                fr.setVisible(true);
+                this.dispose();      
+            }
+            else {
+                JOptionPane.showMessageDialog(null,"Usuario y Contraseña Incorrecto :("); 
+            }
+            
+            
+           
+        } catch (SQLException ex) {
+            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
     }//GEN-LAST:event_iniciar_sesionActionPerformed
 
     /**
@@ -244,7 +291,7 @@ public class login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelar;
-    private javax.swing.JTextField contra;
+    private javax.swing.JPasswordField contra;
     private javax.swing.JButton iniciar_sesion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
