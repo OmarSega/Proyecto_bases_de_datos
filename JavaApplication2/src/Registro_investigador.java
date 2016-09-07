@@ -1,9 +1,17 @@
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package interfaces;
+
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -205,7 +213,28 @@ public class Registro_investigador extends javax.swing.JFrame {
     }//GEN-LAST:event_usuarioActionPerformed
 
     private void iniciar_sesion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iniciar_sesion1ActionPerformed
-        // TODO add your handling code here:
+        
+        try{
+            Connection con = conexion.getConexion();
+            String query = "INSERT INTO Administradores VALUES (?,?,?,?,?,?)";
+            PreparedStatement psmt = con.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+            ResultSet tableKeys = psmt.getGeneratedKeys();
+            int autoid=0;
+            if(tableKeys.next()){
+                autoid = tableKeys.getInt(1);
+            }
+            psmt.setInt(1, autoid);
+            psmt.setString(2, "gil");
+            psmt.setString(3, "gil");
+            psmt.setString(4, "gil");
+            psmt.setString(5, "gil");
+            psmt.setString(6, "gil");
+            psmt.execute();
+            con.close();
+        }
+        catch(SQLException ex){
+            System.out.println(ex.getMessage());
+        }
     }//GEN-LAST:event_iniciar_sesion1ActionPerformed
 
     /**
