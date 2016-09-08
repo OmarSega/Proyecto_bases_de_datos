@@ -411,7 +411,7 @@ public class frmEditInvestigador extends javax.swing.JFrame {
                 String centro[] =jList1.getSelectedValue().toString().split(" ");
                 Connection con = conexion.getConexion();
                 Statement st = con.createStatement();
-               String query = "DELETE FROM investigador_centro WHERE "
+                String query = "DELETE FROM investigador_centro WHERE "
                        + "idInvestigador = '"+investigador[0]+"' and "
                        + "idCentro = '"+centro[0]+"'";
                 //String cluster = txtcluster.getText();

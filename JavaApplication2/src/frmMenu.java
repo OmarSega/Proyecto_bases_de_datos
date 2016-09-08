@@ -21,12 +21,14 @@ import javax.swing.JOptionPane;
  * @author Marco
  */
 public class frmMenu extends javax.swing.JInternalFrame {
-
+    static String investigador[];
    DefaultTableModel modeloTabla, modeloCentros, modeloInvestigadores, modeloOfertas;
-    public frmMenu() {
+    public frmMenu(String investigador[]) {
+        this.investigador = investigador;
         modeloTabla = new DefaultTableModel(null, getColumnasCluster());
         modeloCentros = new DefaultTableModel(null, getColumnasCentros());
         modeloInvestigadores = new DefaultTableModel(null, getColumnasInvestigadores());
+        modeloOfertas = new DefaultTableModel(null, getColumnasOfertas());
         initComponents();
         
     }
@@ -39,6 +41,9 @@ public class frmMenu extends javax.swing.JInternalFrame {
     }
     public String[] getColumnasInvestigadores(){
         return new String[] {"ID","Nombre", "Apellido Paterno", "Apellido Materno"};
+    }
+    public String[] getColumnasOfertas(){
+        return new String[] {"ID","Titulo", "Descripcion", "Antecedentes", "Ventajas", "Mercado"};
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -69,6 +74,11 @@ public class frmMenu extends javax.swing.JInternalFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
+        btnAddOferta = new javax.swing.JButton();
+        editOferta = new javax.swing.JButton();
+        btnActualizarOferta = new javax.swing.JButton();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTable4 = new javax.swing.JTable();
 
         setClosable(true);
         setMaximizable(true);
@@ -251,15 +261,60 @@ public class frmMenu extends javax.swing.JInternalFrame {
 
         jTabbedPane1.addTab("Investigadores", new javax.swing.ImageIcon(getClass().getResource("/images/investigation.png")), jPanel3); // NOI18N
 
+        btnAddOferta.setText("Agregar");
+        btnAddOferta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddOfertaActionPerformed(evt);
+            }
+        });
+
+        editOferta.setText("Editar");
+        editOferta.setToolTipText("");
+        editOferta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editOfertaActionPerformed(evt);
+            }
+        });
+
+        btnActualizarOferta.setText("Actualizar");
+        btnActualizarOferta.setToolTipText("");
+        btnActualizarOferta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarOfertaActionPerformed(evt);
+            }
+        });
+
+        jTable4.setModel(modeloOfertas);
+        jScrollPane5.setViewportView(jTable4);
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 656, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnActualizarOferta, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
+                    .addComponent(editOferta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAddOferta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 455, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(btnAddOferta, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(editOferta, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnActualizarOferta, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Ofertas", new javax.swing.ImageIcon(getClass().getResource("/images/offert.png")), jPanel4); // NOI18N
@@ -403,7 +458,6 @@ public class frmMenu extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         modeloInvestigadores.getDataVector().removeAllElements();
         
-        
         try {
             Connection con = conexion.getConexion();
             Statement st = con.createStatement();
@@ -421,14 +475,49 @@ public class frmMenu extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnActualizarInvestigadorActionPerformed
 
+    private void btnAddOfertaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddOfertaActionPerformed
+        // TODO add your handling code here:
+        frmAddOferta f = new frmAddOferta(investigador);
+        f.setVisible(true);
+        
+    }//GEN-LAST:event_btnAddOfertaActionPerformed
+
+    private void editOfertaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editOfertaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editOfertaActionPerformed
+
+    private void btnActualizarOfertaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarOfertaActionPerformed
+        // TODO add your handling code here:
+        modeloOfertas.getDataVector().removeAllElements();
+        
+        try {
+            Connection con = conexion.getConexion();
+            Statement st = con.createStatement();
+            String query = "SELECT * FROM Oferta" ;  
+            ResultSet rr = st.executeQuery(query);
+            Object datos[] = new Object[4];
+            while(rr.next()){
+                for (int i = 0; i < 4; i++){
+                    datos[i] = rr.getObject(i + 1);
+                }
+                modeloOfertas.addRow(datos);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnActualizarOfertaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizarCentros;
     private javax.swing.JButton btnActualizarInvestigador;
+    private javax.swing.JButton btnActualizarOferta;
     private javax.swing.JButton btnAddCentro;
     private javax.swing.JButton btnAddInvest;
+    private javax.swing.JButton btnAddOferta;
     private javax.swing.JButton editCentros;
     private javax.swing.JButton editInvestigador;
+    private javax.swing.JButton editOferta;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -439,10 +528,12 @@ public class frmMenu extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
+    private javax.swing.JTable jTable4;
     // End of variables declaration//GEN-END:variables
 }
 

@@ -22,6 +22,7 @@ import javax.swing.JOptionPane;
  */
 public class login extends javax.swing.JInternalFrame {
     static JDesktopPane jdp;
+    static String investigador[];
     /**
      * Creates new form login
      */
@@ -238,7 +239,8 @@ public class login extends javax.swing.JInternalFrame {
             if(exito) {
                 /*Menu fr = new Menu();
                 fr.setVisible(true);*/
-                frmMenu menu = new frmMenu();
+                
+                frmMenu menu = new frmMenu(new String[] {userText});
                 jdp.add(menu);
                 menu.setVisible(true);
                 
@@ -249,6 +251,7 @@ public class login extends javax.swing.JInternalFrame {
             else {
                 JOptionPane.showMessageDialog(null,"Usuario y Contraseña Incorrecto :("); 
             }
+            con.close();
             
             
            
