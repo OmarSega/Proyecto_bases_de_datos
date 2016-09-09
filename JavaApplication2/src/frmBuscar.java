@@ -1,4 +1,3 @@
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -55,12 +54,9 @@ public class frmBuscar extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaResultados = new javax.swing.JTable();
         btn_VerOferta = new javax.swing.JButton();
-<<<<<<< HEAD
         btnCerrar = new javax.swing.JButton();
-=======
-        jButton1 = new javax.swing.JButton();
+        //jButton1 = new javax.swing.JButton();
         label_Buscar1 = new javax.swing.JLabel();
->>>>>>> origin/master
 
         jLabel6.setFont(new java.awt.Font("Utsaah", 0, 29)); // NOI18N
         jLabel6.setText("LA CULTURA");
