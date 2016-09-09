@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.table.DefaultTableModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -20,12 +21,18 @@ public class frmBuscar extends javax.swing.JFrame {
     PreparedStatement psmt;
     ResultSet rs;
     Statement st;
+    DefaultTableModel model;
 
     /**
      * Creates new form frmBuscar
      */
     public frmBuscar() {
+        model = new DefaultTableModel(null, getColumnasBusqueda());
         initComponents();
+    }
+    
+    public String[] getColumnasBusqueda(){
+        return new String[] {"Titulo", "Descripción", "Cluster"};
     }
 
     /**
@@ -46,7 +53,7 @@ public class frmBuscar extends javax.swing.JFrame {
         combo_Selector = new javax.swing.JComboBox<>();
         btn_buscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaResultados = new javax.swing.JTable();
         btn_VerOferta = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
@@ -83,18 +90,8 @@ public class frmBuscar extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Titulo", "Descripción", "Cluster"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        tablaResultados.setModel(model);
+        jScrollPane1.setViewportView(tablaResultados);
 
         btn_VerOferta.setText("Ver oferta");
         btn_VerOferta.addActionListener(new java.awt.event.ActionListener() {
@@ -169,26 +166,51 @@ public class frmBuscar extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
+        // Borrar elementos de la tabla
+        model.getDataVector().removeAllElements();
+        
         // Regresar el selector activo
         String selector = (String)combo_Selector.getSelectedItem();
-        String query;
+        String query = "";
+        Object datos[] = new Object[4];
         
         try{
-            if(selector == "Titulo"){
-                query = "SELECT titulo, Descripcion, nombre FROM cluster c "
-                        + "JOIN oferta o ON o.Cluster_idCluster = c.idCluster"
+            Connection con = conexion.getConexion();
+            if(selector == "Investigador"){
+                query = "SELECT titulo, Descripcion, c.nombre FROM cluster c "
+                        + "JOIN oferta o ON o.Cluster_idCluster = c.idCluster "
+                        + "JOIN oferta_investigador oi ON oi.idOferta = o.idOferta "
+                        + "JOIN investigador i ON i.idInvestigador = oi.idInvestigador "
+                        + "WHERE i.nombre LIKE trim('" + barraBuscar.getText()+"')";
+            } else if (selector == "Oferta"){
+                query = "SELECT titulo, Descripcion, nombre "
+                        + "FROM cluster c JOIN oferta o "
+                        + "ON o.Cluster_idCluster = c.idCluster "
                         + "WHERE titulo LIKE trim('" + barraBuscar.getText()+"')";
             } else if (selector == "Cluster"){
-                query = "";
-            } else if (selector == "Oferta"){
-                query = "";
+                query = "SELECT titulo, Descripcion, nombre "
+                        + "FROM cluster c JOIN oferta o "
+                        + "ON o.Cluster_idCluster = c.idCluster "
+                        + "WHERE c.nombre LIKE trim('" + barraBuscar.getText()+"')";
             }
             
+            // Preparar consulta y recibir resultados
             psmt = con.prepareStatement(query);
             rs = psmt.executeQuery(query);
+            
+            // Agregar resultados al modelo
+            while(rs.next()){
+                for (int i = 0; i < 3; i++){
+                    datos[i] = rs.getObject(i + 1);
+                }
+                model.addRow(datos);
+            }
+            
+            con.close();
         }catch (SQLException ex){
             System.out.println(ex.getMessage());
         }
@@ -245,7 +267,7 @@ public class frmBuscar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel label_Buscar;
+    private javax.swing.JTable tablaResultados;
     // End of variables declaration//GEN-END:variables
 }
