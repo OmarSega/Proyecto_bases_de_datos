@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -20,7 +21,6 @@ public class frmBuscar extends javax.swing.JFrame {
     Connection con;           
     PreparedStatement psmt;
     ResultSet rs;
-    Statement st;
     DefaultTableModel model;
 
     /**
@@ -55,8 +55,12 @@ public class frmBuscar extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaResultados = new javax.swing.JTable();
         btn_VerOferta = new javax.swing.JButton();
+<<<<<<< HEAD
+        btnCerrar = new javax.swing.JButton();
+=======
         jButton1 = new javax.swing.JButton();
         label_Buscar1 = new javax.swing.JLabel();
+>>>>>>> origin/master
 
         jLabel6.setFont(new java.awt.Font("Utsaah", 0, 29)); // NOI18N
         jLabel6.setText("LA CULTURA");
@@ -101,10 +105,10 @@ public class frmBuscar extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Cerrar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnCerrar.setText("Cerrar");
+        btnCerrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnCerrarActionPerformed(evt);
             }
         });
 
@@ -122,7 +126,7 @@ public class frmBuscar extends javax.swing.JFrame {
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(btn_VerOferta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnCerrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
@@ -151,7 +155,7 @@ public class frmBuscar extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_VerOferta)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1))
+                        .addComponent(btnCerrar))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(label_Buscar)
@@ -170,13 +174,65 @@ public class frmBuscar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_VerOfertaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_VerOfertaActionPerformed
-        // TODO add your handling code here:
+        System.out.println(tablaResultados.getSelectedRow());
+        if(tablaResultados.getSelectedRowCount() > 0){
+            try{
+                Connection con = conexion.getConexion();
+                String query = "";
+                String Antecedente = "", Ventajas = "", Mercado = "", clave = "", 
+                        estatus_pat = "", est_desarrollo = "";
+                
+                String titulo = model.getValueAt(tablaResultados.getSelectedRow(), 0).toString();
+                String descripcion = model.getValueAt(tablaResultados.getSelectedRow(), 1).toString();
+                String cluster = model.getValueAt(tablaResultados.getSelectedRow(), 2).toString();
+
+                query = "SELECT Antecedente, Ventajas, Mercado, p.clave, ep.descripcion, e.Descripcion"
+                        + " FROM cluster c JOIN oferta o"
+                        + " ON o.Cluster_idCluster = c.idCluster"
+                        + " JOIN oferta_investigador oi"
+                        + " ON oi.idOferta = o.idOferta"
+                        + " JOIN investigador i"
+                        + " ON i.idInvestigador = oi.idInvestigador"
+                        + " JOIN patente p ON o.idOferta = p.Oferta_idOferta"
+                        + " JOIN estatus_patente ep"
+                        + " ON p.fk_idEstatus = ep.idEstatus_patente"
+                        + " JOIN estatus_oferta eo"
+                        + " ON o.idOferta = eo.idOferta"
+                        + " JOIN estatus e"
+                        + " ON e.idEstatus = eo.idEstatus"
+                        + " WHERE o.titulo = '" + titulo
+                        + "' AND o.descripcion = '" + descripcion
+                        + "' AND c.nombre = '" + cluster + "'";
+
+                System.out.println(query);
+                psmt = con.prepareStatement(query);
+                rs = psmt.executeQuery(query);
+                
+                while (rs.next()){
+                    Antecedente = rs.getString("Antecedente");
+                    Ventajas = rs.getString("Ventajas");
+                    Mercado = rs.getString("Mercado");
+                    estatus_pat = rs.getString("ep.descripcion");
+                    clave = rs.getString("p.clave");
+                    est_desarrollo = rs.getString("e.Descripcion");
+                }
+                fromVerOferta fr = new fromVerOferta();
+                fr.setTitles(titulo, Antecedente, descripcion, Ventajas, Mercado, clave, estatus_pat, est_desarrollo);
+                fr.setVisible(true);
+                con.close();
+            }catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+        }
+        else{
+            JOptionPane.showMessageDialog(null,"Seleccione un resultado");
+        }
     }//GEN-LAST:event_btn_VerOfertaActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
         // TODO add your handling code here:
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnCerrarActionPerformed
 
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
         // Borrar elementos de la tabla
@@ -267,10 +323,10 @@ public class frmBuscar extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField barraBuscar;
+    private javax.swing.JButton btnCerrar;
     private javax.swing.JButton btn_VerOferta;
     private javax.swing.JButton btn_buscar;
     private javax.swing.JComboBox<String> combo_Selector;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
