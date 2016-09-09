@@ -174,7 +174,7 @@ public class frmBuscar extends javax.swing.JFrame {
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
         // Regresar el selector activo
         String selector = (String)combo_Selector.getSelectedItem();
-        String query;
+        String query ="";
         
         try{
             if(selector == "Titulo"){
