@@ -276,7 +276,6 @@ public class frmEditPatente extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -306,6 +305,7 @@ public class frmEditPatente extends javax.swing.JFrame {
             st.execute(query);
 
             JOptionPane.showMessageDialog(null,"Se ha creado exitosamente");
+            this.dispose();
 
             //st.execute(query);
 

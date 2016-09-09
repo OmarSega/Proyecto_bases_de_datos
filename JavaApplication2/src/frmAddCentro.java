@@ -230,6 +230,7 @@ public class frmAddCentro extends javax.swing.JFrame {
             con.close();
 
             JOptionPane.showMessageDialog(null,"Se ha creado exitosamente");
+            this.dispose();
             centro.setText("");
             calle.setText("");
             colonia.setText("");

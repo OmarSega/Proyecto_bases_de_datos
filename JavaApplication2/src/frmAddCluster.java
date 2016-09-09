@@ -158,6 +158,7 @@ public class frmAddCluster extends javax.swing.JFrame {
             
             JOptionPane.showMessageDialog(null,"Se ha creado exitosamente el cluster"); 
             txtcluster.setText("");
+            this.dispose();
         }
         catch(SQLException ex){
             System.out.println(ex.getMessage());

@@ -74,7 +74,7 @@ public class frmAddInvestigador extends javax.swing.JFrame {
         jLabel11.setText("Agregar");
 
         jLabel12.setFont(new java.awt.Font("Utsaah", 2, 18)); // NOI18N
-        jLabel12.setText("investigador");
+        jLabel12.setText("Investigador");
         jLabel12.setToolTipText("");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo2.png"))); // NOI18N
@@ -175,6 +175,7 @@ public class frmAddInvestigador extends javax.swing.JFrame {
             nombre.setText("");
             paterno.setText("");
             materno.setText("");
+            this.dispose();
         }
         catch(SQLException ex){
             System.out.println(ex.getMessage());

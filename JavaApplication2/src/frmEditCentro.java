@@ -242,6 +242,7 @@ public class frmEditCentro extends javax.swing.JFrame {
             estado.setText("");
             pais.setText("");
             telefono.setText("");
+            this.dispose();
         }
         catch(SQLException ex){
             System.out.println(ex.getMessage());

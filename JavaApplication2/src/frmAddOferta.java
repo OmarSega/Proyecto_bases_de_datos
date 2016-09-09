@@ -324,6 +324,7 @@ public class frmAddOferta extends javax.swing.JFrame {
             con.close();
 
             JOptionPane.showMessageDialog(null,"Se ha actualizado exitosamente");
+            this.dispose();
             /*nombre.setText("");
             paterno.setText("");
             materno.setText("");*/
