@@ -50,12 +50,13 @@ public class frmBuscar extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         barraBuscar = new javax.swing.JTextField();
         label_Buscar = new javax.swing.JLabel();
-        combo_Selector = new javax.swing.JComboBox<>();
+        combo_Selector = new javax.swing.JComboBox<String>();
         btn_buscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaResultados = new javax.swing.JTable();
         btn_VerOferta = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        label_Buscar1 = new javax.swing.JLabel();
 
         jLabel6.setFont(new java.awt.Font("Utsaah", 0, 29)); // NOI18N
         jLabel6.setText("LA CULTURA");
@@ -76,7 +77,7 @@ public class frmBuscar extends javax.swing.JFrame {
         label_Buscar.setFont(new java.awt.Font("Tahoma", 0, 29)); // NOI18N
         label_Buscar.setText("Buscar");
 
-        combo_Selector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Investigador", "Oferta", "Cluster" }));
+        combo_Selector.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Investigador", "Oferta", "Cluster" }));
         combo_Selector.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 combo_SelectorActionPerformed(evt);
@@ -107,6 +108,9 @@ public class frmBuscar extends javax.swing.JFrame {
             }
         });
 
+        label_Buscar1.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
+        label_Buscar1.setText("Cluster");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -124,7 +128,10 @@ public class frmBuscar extends javax.swing.JFrame {
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(label_Buscar)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(label_Buscar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_Buscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(barraBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -146,7 +153,9 @@ public class frmBuscar extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(label_Buscar)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(label_Buscar)
+                            .addComponent(label_Buscar1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(combo_Selector)
@@ -268,6 +277,7 @@ public class frmBuscar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel label_Buscar;
+    private javax.swing.JLabel label_Buscar1;
     private javax.swing.JTable tablaResultados;
     // End of variables declaration//GEN-END:variables
 }

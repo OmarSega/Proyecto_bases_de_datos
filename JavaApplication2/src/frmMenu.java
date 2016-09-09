@@ -1,4 +1,7 @@
 
+import java.awt.Dimension;
+import static java.awt.Frame.MAXIMIZED_BOTH;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,10 +33,10 @@ public class frmMenu extends javax.swing.JInternalFrame {
         modeloInvestigadores = new DefaultTableModel(null, getColumnasInvestigadores());
         modeloOfertas = new DefaultTableModel(null, getColumnasOfertas());
         modeloPatentes = new DefaultTableModel(null, getColumnasPatentes());
+        
         initComponents();
         
     }
-    
     public String[] getColumnasCluster(){
         return new String[] {"Codigo Cluster", "Nombre Cluster"};
     }
