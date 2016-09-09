@@ -182,23 +182,8 @@ public class frmBuscar extends javax.swing.JFrame {
                 String descripcion = model.getValueAt(tablaResultados.getSelectedRow(), 1).toString();
                 String cluster = model.getValueAt(tablaResultados.getSelectedRow(), 2).toString();
 
-                query = "SELECT Antecedente, Ventajas, Mercado, p.clave, ep.descripcion, e.Descripcion"
-                        + " FROM cluster c JOIN oferta o"
-                        + " ON o.Cluster_idCluster = c.idCluster"
-                        + " JOIN oferta_investigador oi"
-                        + " ON oi.idOferta = o.idOferta"
-                        + " JOIN investigador i"
-                        + " ON i.idInvestigador = oi.idInvestigador"
-                        + " JOIN patente p ON o.idOferta = p.Oferta_idOferta"
-                        + " JOIN estatus_patente ep"
-                        + " ON p.fk_idEstatus = ep.idEstatus_patente"
-                        + " JOIN estatus_oferta eo"
-                        + " ON o.idOferta = eo.idOferta"
-                        + " JOIN estatus e"
-                        + " ON e.idEstatus = eo.idEstatus"
-                        + " WHERE o.titulo = '" + titulo
-                        + "' AND o.descripcion = '" + descripcion
-                        + "' AND c.nombre = '" + cluster + "'";
+                query = "SELECT Antecedente, Ventajas, Mercado FROM oferta WHERE titulo like '" + titulo
+                        + "' ";
 
                 System.out.println(query);
                 psmt = con.prepareStatement(query);
@@ -208,9 +193,7 @@ public class frmBuscar extends javax.swing.JFrame {
                     Antecedente = rs.getString("Antecedente");
                     Ventajas = rs.getString("Ventajas");
                     Mercado = rs.getString("Mercado");
-                    estatus_pat = rs.getString("ep.descripcion");
-                    clave = rs.getString("p.clave");
-                    est_desarrollo = rs.getString("e.Descripcion");
+                    
                 }
                 fromVerOferta fr = new fromVerOferta();
                 fr.setTitles(titulo, Antecedente, descripcion, Ventajas, Mercado, clave, estatus_pat, est_desarrollo);

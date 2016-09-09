@@ -22,8 +22,7 @@ public class fromVerOferta extends javax.swing.JFrame {
         area_antecedente.setText(Antecedente);
         area_ventajas.setText(ventajas);
         field_mercado.setText(mercado);
-        field_patente.setText(patente + " - " + estatus_pat);
-        field_estatus.setText(est_desarrollo);
+        
         
         // Populate all other fields
         
@@ -52,10 +51,6 @@ public class fromVerOferta extends javax.swing.JFrame {
         field_mercado = new javax.swing.JTextField();
         label_detalles1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        label_Patente = new javax.swing.JLabel();
-        field_patente = new javax.swing.JTextField();
-        label_estatus = new javax.swing.JLabel();
-        field_estatus = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -98,16 +93,6 @@ public class fromVerOferta extends javax.swing.JFrame {
             }
         });
 
-        label_Patente.setText("Patente");
-
-        label_estatus.setText("Estatus");
-
-        field_estatus.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                field_estatusActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -128,15 +113,11 @@ public class fromVerOferta extends javax.swing.JFrame {
                             .addComponent(label_descripcion)
                             .addComponent(label_antecedente)
                             .addComponent(label_ventajas)
-                            .addComponent(label_mercado)
-                            .addComponent(label_Patente)
-                            .addComponent(label_estatus))
+                            .addComponent(label_mercado))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1))
-                    .addComponent(field_estatus)
-                    .addComponent(field_patente))
+                        .addComponent(jButton1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -162,15 +143,7 @@ public class fromVerOferta extends javax.swing.JFrame {
                 .addComponent(label_mercado)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(field_mercado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(label_Patente)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(field_patente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(label_estatus)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(field_estatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(98, 98, 98)
                 .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -181,10 +154,6 @@ public class fromVerOferta extends javax.swing.JFrame {
     private void field_mercadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_field_mercadoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_field_mercadoActionPerformed
-
-    private void field_estatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_field_estatusActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_field_estatusActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -230,18 +199,14 @@ public class fromVerOferta extends javax.swing.JFrame {
     private javax.swing.JTextArea area_antecedente;
     private javax.swing.JTextArea area_descripcion;
     private javax.swing.JTextArea area_ventajas;
-    private javax.swing.JTextField field_estatus;
     private javax.swing.JTextField field_mercado;
-    private javax.swing.JTextField field_patente;
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JLabel label_Patente;
     private javax.swing.JLabel label_antecedente;
     private javax.swing.JLabel label_descripcion;
     private javax.swing.JLabel label_detalles1;
-    private javax.swing.JLabel label_estatus;
     private javax.swing.JLabel label_mercado;
     private javax.swing.JLabel label_titulo;
     private javax.swing.JLabel label_ventajas;
