@@ -176,7 +176,7 @@ public class frmBuscar extends javax.swing.JFrame {
         // Regresar el selector activo
         String selector = (String)combo_Selector.getSelectedItem();
         String query = "";
-        Object datos[] = new Object[4];
+        Object datos[] = new Object[3];
         
         try{
             Connection con = conexion.getConexion();

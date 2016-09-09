@@ -29,8 +29,6 @@ int main(int argc, char** argv) {
     printf("Tamano de la union = %d", sizeof(u));
     printf("\nTamano de la estructura = %d", sizeof(s));
     
-    
-    
     return (EXIT_SUCCESS);
 }
 

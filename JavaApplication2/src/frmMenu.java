@@ -22,13 +22,14 @@ import javax.swing.JOptionPane;
  */
 public class frmMenu extends javax.swing.JInternalFrame {
     static String investigador[];
-   DefaultTableModel modeloTabla, modeloCentros, modeloInvestigadores, modeloOfertas;
+   DefaultTableModel modeloTabla, modeloCentros, modeloInvestigadores, modeloOfertas, modeloPatentes;
     public frmMenu(String investigador[]) {
         this.investigador = investigador;
         modeloTabla = new DefaultTableModel(null, getColumnasCluster());
         modeloCentros = new DefaultTableModel(null, getColumnasCentros());
         modeloInvestigadores = new DefaultTableModel(null, getColumnasInvestigadores());
         modeloOfertas = new DefaultTableModel(null, getColumnasOfertas());
+        modeloPatentes = new DefaultTableModel(null, getColumnasPatentes());
         initComponents();
         
     }
@@ -43,7 +44,10 @@ public class frmMenu extends javax.swing.JInternalFrame {
         return new String[] {"ID","Nombre", "Apellido Paterno", "Apellido Materno"};
     }
     public String[] getColumnasOfertas(){
-        return new String[] {"ID","Titulo", "Descripcion", "Antecedentes", "Ventajas", "Mercado"};
+        return new String[] {"ID","Titulo", "Descripcion", "Antecedentes", "Ventajas", "Mercado", "ID Cluster"};
+    }
+    public String[] getColumnasPatentes(){
+        return new String[] {"ID","clave", "ID oferta", "Estatus"};
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -78,7 +82,13 @@ public class frmMenu extends javax.swing.JInternalFrame {
         editOferta = new javax.swing.JButton();
         btnActualizarOferta = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
+        tablaOferta = new javax.swing.JTable();
+        jPanel5 = new javax.swing.JPanel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        jTable6 = new javax.swing.JTable();
+        btnAddOferta2 = new javax.swing.JButton();
+        editOferta2 = new javax.swing.JButton();
+        btnActualizarOferta2 = new javax.swing.JButton();
 
         setClosable(true);
         setMaximizable(true);
@@ -284,21 +294,21 @@ public class frmMenu extends javax.swing.JInternalFrame {
             }
         });
 
-        jTable4.setModel(modeloOfertas);
-        jScrollPane5.setViewportView(jTable4);
+        tablaOferta.setModel(modeloOfertas);
+        jScrollPane5.setViewportView(tablaOferta);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnActualizarOferta, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
+                    .addComponent(btnActualizarOferta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(editOferta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAddOferta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnAddOferta, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -306,7 +316,7 @@ public class frmMenu extends javax.swing.JInternalFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(btnAddOferta, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -314,10 +324,68 @@ public class frmMenu extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnActualizarOferta, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addGap(94, 94, 94))
         );
 
         jTabbedPane1.addTab("Ofertas", new javax.swing.ImageIcon(getClass().getResource("/images/offert.png")), jPanel4); // NOI18N
+
+        jTable6.setModel(modeloPatentes);
+        jScrollPane7.setViewportView(jTable6);
+
+        btnAddOferta2.setText("Agregar");
+        btnAddOferta2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddOferta2ActionPerformed(evt);
+            }
+        });
+
+        editOferta2.setText("Editar");
+        editOferta2.setToolTipText("");
+        editOferta2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editOferta2ActionPerformed(evt);
+            }
+        });
+
+        btnActualizarOferta2.setText("Actualizar");
+        btnActualizarOferta2.setToolTipText("");
+        btnActualizarOferta2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarOferta2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnActualizarOferta2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(editOferta2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAddOferta2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(btnAddOferta2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(editOferta2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnActualizarOferta2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(94, 94, 94))
+        );
+
+        jTabbedPane1.addTab("Patentes", new javax.swing.ImageIcon(getClass().getResource("/images/patent.png")), jPanel5); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -484,6 +552,22 @@ public class frmMenu extends javax.swing.JInternalFrame {
 
     private void editOfertaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editOfertaActionPerformed
         // TODO add your handling code here:
+        if (tablaOferta.getSelectedRowCount() > 0) {
+            String id = modeloOfertas.getValueAt(tablaOferta.getSelectedRow(), 0).toString();
+            String titulo = modeloOfertas.getValueAt(tablaOferta.getSelectedRow(), 1).toString();
+            String descripcion = modeloOfertas.getValueAt(tablaOferta.getSelectedRow(), 2).toString();
+            String antecedentes = modeloOfertas.getValueAt(tablaOferta.getSelectedRow(), 3).toString();
+            String ventajas = modeloOfertas.getValueAt(tablaOferta.getSelectedRow(), 4).toString();
+            String mercado = modeloOfertas.getValueAt(tablaOferta.getSelectedRow(), 5).toString();
+            String cluster = modeloOfertas.getValueAt(tablaOferta.getSelectedRow(), 6).toString();
+            
+            String centro [] = {id , titulo, descripcion, antecedentes, ventajas, mercado, cluster};
+            frmEditOfertas f = new frmEditOfertas(centro);
+            f.setVisible(true);
+        }
+        else {
+            JOptionPane.showMessageDialog(null,"Seleccione una oferta porfavor");
+        }
     }//GEN-LAST:event_editOfertaActionPerformed
 
     private void btnActualizarOfertaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarOfertaActionPerformed
@@ -493,11 +577,11 @@ public class frmMenu extends javax.swing.JInternalFrame {
         try {
             Connection con = conexion.getConexion();
             Statement st = con.createStatement();
-            String query = "SELECT * FROM Oferta" ;  
+            String query = "SELECT * FROM Oferta " ;  
             ResultSet rr = st.executeQuery(query);
-            Object datos[] = new Object[4];
+            Object datos[] = new Object[7];
             while(rr.next()){
-                for (int i = 0; i < 4; i++){
+                for (int i = 0; i < 7; i++){
                     datos[i] = rr.getObject(i + 1);
                 }
                 modeloOfertas.addRow(datos);
@@ -507,17 +591,65 @@ public class frmMenu extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnActualizarOfertaActionPerformed
 
+    private void btnAddOferta2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddOferta2ActionPerformed
+        // TODO add your handling code here:
+        frmAddPatente f = new frmAddPatente();
+        f.setVisible(true);
+    }//GEN-LAST:event_btnAddOferta2ActionPerformed
+
+    private void editOferta2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editOferta2ActionPerformed
+        // TODO add your handling code here:
+        if (jTable6.getSelectedRowCount() > 0) {
+            String id = modeloPatentes.getValueAt(jTable6.getSelectedRow(), 0).toString();
+            String clave = modeloPatentes.getValueAt(jTable6.getSelectedRow(), 1).toString();
+            String idOferta = modeloPatentes.getValueAt(jTable6.getSelectedRow(), 2).toString();
+            String idEstatus = modeloPatentes.getValueAt(jTable6.getSelectedRow(), 3).toString();
+            
+            
+            String centro [] = {id , clave, idOferta, idEstatus};
+            frmEditPatente f = new frmEditPatente(centro);
+            f.setVisible(true);
+        }
+        else {
+            JOptionPane.showMessageDialog(null,"Seleccione una oferta porfavor");
+        }
+    }//GEN-LAST:event_editOferta2ActionPerformed
+
+    private void btnActualizarOferta2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarOferta2ActionPerformed
+        // TODO add your handling code here:
+         modeloPatentes.getDataVector().removeAllElements();
+        
+        try {
+            Connection con = conexion.getConexion();
+            Statement st = con.createStatement();
+            String query = "SELECT * FROM Patente " ;  
+            ResultSet rr = st.executeQuery(query);
+            Object datos[] = new Object[4];
+            while(rr.next()){
+                for (int i = 0; i < 4; i++){
+                    datos[i] = rr.getObject(i + 1);
+                }
+                modeloPatentes.addRow(datos);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnActualizarOferta2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizarCentros;
     private javax.swing.JButton btnActualizarInvestigador;
     private javax.swing.JButton btnActualizarOferta;
+    private javax.swing.JButton btnActualizarOferta2;
     private javax.swing.JButton btnAddCentro;
     private javax.swing.JButton btnAddInvest;
     private javax.swing.JButton btnAddOferta;
+    private javax.swing.JButton btnAddOferta2;
     private javax.swing.JButton editCentros;
     private javax.swing.JButton editInvestigador;
     private javax.swing.JButton editOferta;
+    private javax.swing.JButton editOferta2;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -525,15 +657,18 @@ public class frmMenu extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
-    private javax.swing.JTable jTable4;
+    private javax.swing.JTable jTable6;
+    private javax.swing.JTable tablaOferta;
     // End of variables declaration//GEN-END:variables
 }
 
