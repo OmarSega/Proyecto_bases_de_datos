@@ -9,12 +9,24 @@
  * @author Omar
  */
 public class fromVerOferta extends javax.swing.JFrame {
-
     /**
      * Creates new form fromVerOferta
      */
     public fromVerOferta() {
         initComponents();
+    }
+    public void setTitles(String titulo, String Antecedente, String Descripcion,
+            String ventajas, String mercado, String patente, String estatus_pat, String est_desarrollo) {
+        label_titulo.setText(titulo);
+        area_descripcion.setText(Descripcion);
+        area_antecedente.setText(Antecedente);
+        area_ventajas.setText(ventajas);
+        field_mercado.setText(mercado);
+        field_patente.setText(patente + " - " + estatus_pat);
+        field_estatus.setText(est_desarrollo);
+        
+        // Populate all other fields
+        
     }
 
     /**
@@ -26,7 +38,7 @@ public class fromVerOferta extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        label_detalles = new javax.swing.JLabel();
+        label_titulo = new javax.swing.JLabel();
         label_descripcion = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         area_descripcion = new javax.swing.JTextArea();
@@ -39,11 +51,15 @@ public class fromVerOferta extends javax.swing.JFrame {
         label_mercado = new javax.swing.JLabel();
         field_mercado = new javax.swing.JTextField();
         label_detalles1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        label_Patente = new javax.swing.JLabel();
+        field_patente = new javax.swing.JTextField();
+        label_estatus = new javax.swing.JLabel();
+        field_estatus = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        label_detalles.setFont(new java.awt.Font("Tahoma", 0, 29)); // NOI18N
-        label_detalles.setText("Detalles:");
+        label_titulo.setFont(new java.awt.Font("Tahoma", 0, 29)); // NOI18N
 
         label_descripcion.setText("Descripción");
 
@@ -75,6 +91,18 @@ public class fromVerOferta extends javax.swing.JFrame {
         label_detalles1.setFont(new java.awt.Font("Tahoma", 0, 29)); // NOI18N
         label_detalles1.setText("Detalles:");
 
+        jButton1.setText("Cerrar");
+
+        label_Patente.setText("Patente");
+
+        label_estatus.setText("Estatus");
+
+        field_estatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                field_estatusActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -82,30 +110,37 @@ public class fromVerOferta extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
                     .addComponent(jScrollPane3)
                     .addComponent(jScrollPane1)
                     .addComponent(field_mercado)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(label_detalles1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label_titulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(label_descripcion)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(label_detalles1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(label_detalles))
                             .addComponent(label_antecedente)
                             .addComponent(label_ventajas)
-                            .addComponent(label_mercado))
-                        .addGap(0, 109, Short.MAX_VALUE)))
+                            .addComponent(label_mercado)
+                            .addComponent(label_Patente)
+                            .addComponent(label_estatus))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1))
+                    .addComponent(field_estatus)
+                    .addComponent(field_patente))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(label_detalles1)
-                    .addComponent(label_detalles))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(label_detalles1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(label_titulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(label_descripcion)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -122,7 +157,17 @@ public class fromVerOferta extends javax.swing.JFrame {
                 .addComponent(label_mercado)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(field_mercado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(label_Patente)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(field_patente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(label_estatus)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(field_estatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -131,6 +176,10 @@ public class fromVerOferta extends javax.swing.JFrame {
     private void field_mercadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_field_mercadoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_field_mercadoActionPerformed
+
+    private void field_estatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_field_estatusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_field_estatusActionPerformed
 
     /**
      * @param args the command line arguments
@@ -171,15 +220,20 @@ public class fromVerOferta extends javax.swing.JFrame {
     private javax.swing.JTextArea area_antecedente;
     private javax.swing.JTextArea area_descripcion;
     private javax.swing.JTextArea area_ventajas;
+    private javax.swing.JTextField field_estatus;
     private javax.swing.JTextField field_mercado;
+    private javax.swing.JTextField field_patente;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel label_Patente;
     private javax.swing.JLabel label_antecedente;
     private javax.swing.JLabel label_descripcion;
-    private javax.swing.JLabel label_detalles;
     private javax.swing.JLabel label_detalles1;
+    private javax.swing.JLabel label_estatus;
     private javax.swing.JLabel label_mercado;
+    private javax.swing.JLabel label_titulo;
     private javax.swing.JLabel label_ventajas;
     // End of variables declaration//GEN-END:variables
 }
