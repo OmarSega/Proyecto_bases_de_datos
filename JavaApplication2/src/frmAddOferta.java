@@ -19,16 +19,44 @@ import javax.swing.JPanel;
  */
 public class frmAddOferta extends javax.swing.JFrame {
     static String investigador[];
-    static String patent[];
     /**
      * Creates new form frmAddOferta
      */
     public frmAddOferta(String investigador[]) {
         initComponents();
         this.investigador = investigador;
-        patent = new String[2];
-        setCombo();
+        //setCombo();
         setComboCluster();
+        try{
+            Connection con = conexion.getConexion();
+            Statement st = con.createStatement();
+            String query = "SELECT idAdministradores "
+                   + "FROM `administradores` where usuario = '"+investigador[0]+"'";
+            //String cluster = txtcluster.getText();
+            ResultSet rs = st.executeQuery(query);
+            
+            
+            int i = 0;
+            //estatus.removeAllItems();
+            while(rs.next())
+            {
+                investigador[0] = rs.getString("idAdministradores");
+                //estatus.addItem(rs.getString("idEstatus") + " " + rs.getString("descripcion"));
+                
+            }
+            con.close();
+            
+            /*
+            JOptionPane.showMessageDialog(null,"Se ha creado exitosamente");
+            nombre.setText("");
+            paterno.setText("");
+            materno.setText("");*/
+        }
+        catch(SQLException ex){
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null,"Ha ocurrido un problema");
+            this.dispose();
+        }
     }
 
     /**
@@ -59,17 +87,11 @@ public class frmAddOferta extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         mercado = new javax.swing.JTextArea();
         jLabel16 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel17 = new javax.swing.JLabel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        patente = new javax.swing.JList<>();
-        jLabel18 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         ventajas = new javax.swing.JTextArea();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        btnAddPatente = new javax.swing.JButton();
+        cluster = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -130,14 +152,6 @@ public class frmAddOferta extends javax.swing.JFrame {
         jLabel16.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel16.setText("Mercado");
 
-        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel17.setText("Estatus");
-
-        jScrollPane4.setViewportView(patente);
-
-        jLabel18.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel18.setText("Patentes");
-
         ventajas.setColumns(20);
         ventajas.setRows(5);
         jScrollPane5.setViewportView(ventajas);
@@ -147,13 +161,6 @@ public class frmAddOferta extends javax.swing.JFrame {
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel20.setText("Cluster");
-
-        btnAddPatente.setText("Agregar Patente");
-        btnAddPatente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddPatenteActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -213,24 +220,15 @@ public class frmAddOferta extends javax.swing.JFrame {
                                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel17)
-                                        .addComponent(jLabel18))
-                                    .addGap(30, 30, 30)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
-                                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(btnAddOferta)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(cerrar))
-                                .addComponent(btnAddPatente, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(216, 216, 216)
+                                .addComponent(btnAddOferta)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cerrar))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel20)
                                 .addGap(30, 30, 30)
-                                .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addComponent(cluster, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -259,20 +257,10 @@ public class frmAddOferta extends javax.swing.JFrame {
                             .addComponent(jLabel14)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel17))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel18))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAddPatente)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cluster, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel20))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -296,48 +284,7 @@ public class frmAddOferta extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void setCombo(){
-        try{
-            
-            // para utilizar el procedimiento almacenado
-            // La clase CallableStament sirve para mandar a llamar procedimientos
-
-            Connection con = conexion.getConexion();
-            Statement st = con.createStatement();
-            String query = "SELECT * "
-                   + "FROM `estatus` ";
-            //String cluster = txtcluster.getText();
-            ResultSet rs = st.executeQuery(query);
-            
-            
-            int i = 0;
-            jComboBox1.removeAllItems();
-            while(rs.next())
-            {
-                jComboBox1.addItem(rs.getString("idEstatus") + " " + rs.getString("descripcion"));
-                
-            }
-            
-            
-           
-            //st.execute(query);
-
-            // para utilizar el procedimiento almacenado
-            // La clase CallableStament sirve para mandar a llamar procedimientos
-
-            con.close();
-
-            /*JOptionPane.showMessageDialog(null,"Se ha creado exitosamente");
-            nombre.setText("");
-            paterno.setText("");
-            materno.setText("");*/
-        }
-        catch(SQLException ex){
-            System.out.println(ex.getMessage());
-            JOptionPane.showMessageDialog(null,"Ha ocurrido un problema");
-            this.dispose();
-        }
-    }
+    
     public void setComboCluster(){
         try{
             
@@ -353,10 +300,10 @@ public class frmAddOferta extends javax.swing.JFrame {
             String id_parcial[] = new String[30];
             
             int i = 0;
-            jComboBox2.removeAllItems();
+            cluster.removeAllItems();
             while(rs.next())
             {
-                jComboBox2.addItem(rs.getString("id") + " " + rs.getString("nombre"));
+                cluster.addItem(rs.getString("id") + " " + rs.getString("nombre"));
                 
             }
             
@@ -388,11 +335,20 @@ public class frmAddOferta extends javax.swing.JFrame {
 
             Connection con = conexion.getConexion();
             Statement st = con.createStatement();
-            String query = "INSERT INTO oferta VALUES ( '"+ nombre.getText() + "',"
+            String query = "INSERT INTO oferta VALUES ( null , '"+ nombre.getText() + "',"
             + " '"+descripcion.getText()+"', '"+antecedentes.getText()+"',"
-            + " '"+ventajas.getText()+"', '"+mercado.getText()+"', )";
+            + " '"+ventajas.getText()+"', '"+mercado.getText()+"', '"
+            +cluster.getItemAt(cluster.getSelectedIndex()).split(" ")[0]
+            +"', '"+investigador[0]+"' )";
             //String cluster = txtcluster.getText();
             st.execute(query);
+            
+            nombre.setText("");
+            descripcion.setText("");
+            antecedentes.setText("");
+            ventajas.setText("");
+            mercado.setText("");
+            
 
             // para utilizar el procedimiento almacenado
             // La clase CallableStament sirve para mandar a llamar procedimientos
@@ -416,26 +372,7 @@ public class frmAddOferta extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_cerrarActionPerformed
 
-    private void btnAddPatenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPatenteActionPerformed
-        // TODO add your handling code here:
-        JDialog dialog = new JDialog(this);
-        String patente[] = new String[4];
-        jPanelPatente f = new jPanelPatente();
-        dialog.getContentPane().add(f);
-        dialog.pack();
-        dialog.setVisible(true);
-        
-       patent = f.patentes();
-        
-        
-        
-        //patente = f.pa();
-    }//GEN-LAST:event_btnAddPatenteActionPerformed
-
-    public void pa(String patent[]){
-        this.patent = patent;
-        
-    }
+    
     /**
      * @param args the command line arguments
      */
@@ -474,19 +411,15 @@ public class frmAddOferta extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea antecedentes;
     private javax.swing.JButton btnAddOferta;
-    private javax.swing.JButton btnAddPatente;
     private javax.swing.JButton cerrar;
+    private javax.swing.JComboBox<String> cluster;
     private javax.swing.JTextArea descripcion;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
@@ -496,11 +429,9 @@ public class frmAddOferta extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTextArea mercado;
     private javax.swing.JTextField nombre;
-    private javax.swing.JList<String> patente;
     private javax.swing.JTextArea ventajas;
     // End of variables declaration//GEN-END:variables
 }
